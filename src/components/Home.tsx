@@ -1,7 +1,13 @@
 import React from "react";
 import "./Common.css";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const Home = () => {
+  const Today = new Date();
+  const [date, setDate] = React.useState(Today);
+
   return (
     <div className='ui container' id='container'>
       <div className='Search__Form'>
@@ -10,7 +16,11 @@ const Home = () => {
             <label>
               <i className='calendar alternate outline icon'></i>プレー日
             </label>
-            <input type='date' />
+            <DatePicker
+              onChange={(selectedDate) => {
+                setDate(selectedDate || Today);
+              }}
+            />
           </div>
 
           <div className='field'>
