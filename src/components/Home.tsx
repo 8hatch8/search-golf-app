@@ -10,6 +10,7 @@ import axios from "axios";
 
 //components
 import Result from "./Result";
+import Loading from "./Loading";
 
 // Plan型を定義し、Resultコンポーネントでも使えるようエクスポート
 export type Plan = {
@@ -34,6 +35,7 @@ const Home = () => {
   const [plans, setPlans] = React.useState<Plan[]>([]); // Planの後の[]はなに？
   const [plansCount, setPlansCount] = React.useState<number | undefined>(undefined);
   const [hasError, setHasError] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   registerLocale("ja", ja);
 
   // formタグでbuttonをクリックするとデフォルトでonSubmitイベントが走る
@@ -41,6 +43,8 @@ const Home = () => {
   const onFormSubmit = async (event: { preventDefault: () => void }) => {
     try {
       event.preventDefault();
+
+      setLoading(true); // Loadingコンポーネント
 
       const url =
         "https://l1kwik11ne.execute-api.ap-northeast-1.amazonaws.com/production/golf-courses";
@@ -57,6 +61,8 @@ const Home = () => {
       console.log(response.data.count); // #デバッグ用
       console.log(date, budget, departure, duration); // #デバッグ用
       console.log(response); // #デバッグ用
+
+      setLoading(false);
     } catch (err) {
       console.log(err);
       setHasError(true);
@@ -135,6 +141,9 @@ const Home = () => {
             </button>
           </div>
         </form>
+
+        <Loading loading={loading} />
+
         <Result plans={plans} plansCount={plansCount} error={hasError} />
       </div>
     </div>

@@ -5,10 +5,10 @@ type Props = {
 };
 
 const Loading: React.FC<Props> = ({ loading }) => {
-  if (!!loading) {
+  if (!loading) {
     return <div></div>;
   }
-
+  // loading === trueならローディング画面を表示
   return (
     <div className='loading'>
       <div className='loading-image'>
