@@ -33,29 +33,35 @@ const Home = () => {
   const [duration, setDuration] = React.useState<number>(60);
   const [plans, setPlans] = React.useState<Plan[]>([]); // Planの後の[]はなに？
   const [plansCount, setPlansCount] = React.useState<number | undefined>(undefined);
+  const [hasError, setHasError] = React.useState<boolean>(false);
   registerLocale("ja", ja);
 
   // formタグでbuttonをクリックするとデフォルトでonSubmitイベントが走る
   // event.preventDefaultでonSubmitイベントをキャンセルしている
   const onFormSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    const url =
-      "https://l1kwik11ne.execute-api.ap-northeast-1.amazonaws.com/production/golf-courses";
-    const response = await axios.get(url, {
-      params: {
-        date: addDays(date, 14),
-        budget: budget,
-        departure: departure,
-        duration: duration,
-      },
-    });
-    setPlans(response.data.plans);
-    setPlansCount(response.data.count); // plansCountとなっていたが、countではないか？
-    console.log(response.data.count); // #デバッグ用
-    console.log(date, budget, departure, duration); // #デバッグ用
-    console.log(response); // #デバッグ用
-  };
+    try {
+      event.preventDefault();
 
+      const url =
+        "https://l1kwik11ne.execute-api.ap-northeast-1.amazonaws.com/production/golf-courses";
+      const response = await axios.get(url, {
+        params: {
+          date: addDays(date, 14),
+          budget: budget,
+          departure: departure,
+          duration: duration,
+        },
+      });
+      setPlans(response.data.plans);
+      setPlansCount(response.data.count); // plansCountとなっていたが、countではないか？
+      console.log(response.data.count); // #デバッグ用
+      console.log(date, budget, departure, duration); // #デバッグ用
+      console.log(response); // #デバッグ用
+    } catch (err) {
+      console.log(err);
+      setHasError(true);
+    }
+  };
   return (
     <div className='ui container' id='container'>
       <div className='Search__Form'>
@@ -129,7 +135,7 @@ const Home = () => {
             </button>
           </div>
         </form>
-        <Result plans={plans} plansCount={plansCount} />
+        <Result plans={plans} plansCount={plansCount} error={hasError} />
       </div>
     </div>
   );
