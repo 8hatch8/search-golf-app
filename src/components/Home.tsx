@@ -9,7 +9,10 @@ import axios from "axios";
 
 const Home = () => {
   const Today = new Date();
-  const [date, setDate] = React.useState(Today);
+  const [date, setDate] = React.useState<Date>(Today);
+  const [budget, setBudget] = React.useState<number>(8000);
+  const [departure, setDeparture] = React.useState<number>(1);
+  const [duration, setDuration] = React.useState<number>(60);
   registerLocale("ja", ja);
 
   // formタグでbuttonをクリックするとデフォルトでonSubmitイベントが走る
@@ -26,7 +29,8 @@ const Home = () => {
         duration: "60分",
       },
     });
-    console.log(response);
+    console.log(date, budget, departure, duration); // #デバッグ用
+    console.log(response); // #デバッグ用
   };
 
   return (
@@ -52,7 +56,12 @@ const Home = () => {
             <label>
               <i className='yen sign icon'></i>上限金額
             </label>
-            <select className='ui dropdown' name='dropdown'>
+            <select
+              className='ui dropdown'
+              name='dropdown'
+              value={budget}
+              onChange={(e) => setBudget(Number(e.target.value))} // e.target.valueはStringでくるためNumberに変換
+            >
               <option value='8000'>8,000円</option>
               <option value='12000'>12,000円</option>
               <option value='16000'>16,000円</option>
@@ -64,7 +73,12 @@ const Home = () => {
               <i className='map pin icon'></i>
               移動時間計算の出発地点（自宅から近い地点をお選びください）
             </label>
-            <select className='ui dropdown' name='dropdown'>
+            <select
+              className='ui dropdown'
+              name='dropdown'
+              value={departure}
+              onChange={(e) => setDeparture(Number(e.target.value))}
+            >
               <option value='1'>東京駅</option>
               <option value='2'>横浜駅</option>
             </select>
@@ -74,7 +88,12 @@ const Home = () => {
             <label>
               <i className='car icon'></i>車での移動時間の上限
             </label>
-            <select className='ui dropdown' name='dropdown'>
+            <select
+              className='ui dropdown'
+              name='dropdown'
+              value={duration}
+              onChange={(e) => setDuration(Number(e.target.value))}
+            >
               <option value='60'>60分</option>
               <option value='90'>90分</option>
               <option value='120'>120分</option>
