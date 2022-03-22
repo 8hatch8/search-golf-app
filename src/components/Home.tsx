@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Key } from "react";
 import "./Common.css";
 
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -11,13 +11,27 @@ import axios from "axios";
 //components
 import Result from "./Result";
 
+// Plan型を定義し、Resultコンポーネントでも使えるようエクスポート
+export type Plan = {
+  plan_id: Key;
+  image_url: string;
+  course_name: string;
+  duration: string;
+  price: string;
+  evalution: string;
+  prefecture: string;
+  plan_name: string;
+  caption: string;
+  reserve_url_pc: string;
+};
+
 const Home = () => {
   const Today = new Date();
   const [date, setDate] = React.useState<Date>(Today);
   const [budget, setBudget] = React.useState<number>(8000);
   const [departure, setDeparture] = React.useState<number>(1);
   const [duration, setDuration] = React.useState<number>(60);
-  const [plans, setPlans] = React.useState([]);
+  const [plans, setPlans] = React.useState<Plan[]>([]); // Planの後の[]はなに？
   registerLocale("ja", ja);
 
   // formタグでbuttonをクリックするとデフォルトでonSubmitイベントが走る

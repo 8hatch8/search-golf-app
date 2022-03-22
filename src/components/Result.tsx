@@ -1,10 +1,15 @@
 import "./Common.css";
+import { Plan } from "./Home";
 
-const Result: React.FC<any> = ({ plans }) => {
+type Props = {
+  plans: Plan[];
+};
+
+const Result: React.FC<Props> = ({ plans }) => {
   // Resultコンポーネントは配列を受け取って、繰り返し処理で要素ごとHTMLを返す
   // React.FCってどんな型？インターフェースで定義？
   // plansの例: plans[{caption: "", course_name: "", …}, …]
-  const result = plans.map((plan: any) => {
+  const result = plans.map((plan: Plan) => {
     // mapで配列を返す
     return (
       <div className='item' key={plan.plan_id}>
@@ -30,7 +35,7 @@ const Result: React.FC<any> = ({ plans }) => {
 
               <div className='statistic'>
                 <div className='value'>
-                  <i className='thumbs up outline icon'></i> {plan.evaluation}
+                  <i className='thumbs up outline icon'></i> {plan.evalution}
                 </div>
               </div>
             </div>
