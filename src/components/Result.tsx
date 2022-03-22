@@ -1,7 +1,11 @@
 import "./Common.css";
 
 const Result: React.FC<any> = ({ plans }) => {
+  // Resultコンポーネントは配列を受け取って、繰り返し処理で要素ごとHTMLを返す
+  // React.FCってどんな型？インターフェースで定義？
+  // plansの例: plans[{caption: "", course_name: "", …}, …]
   const result = plans.map((plan: any) => {
+    // mapで配列を返す
     return (
       <div className='item' key={plan.plan_id}>
         <div className='image'>
@@ -51,7 +55,7 @@ const Result: React.FC<any> = ({ plans }) => {
     );
   });
 
-  return <div>{result}</div>;
+  return <div>{result}</div>; // 最後に配列をdivタグで括ってエクスポート
 };
 
 export default Result;
