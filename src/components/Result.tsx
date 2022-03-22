@@ -3,9 +3,22 @@ import { Plan } from "./Home";
 
 type Props = {
   plans: Plan[];
+  plansCount: number | undefined;
 };
 
-const Result: React.FC<Props> = ({ plans }) => {
+const Result: React.FC<Props> = ({ plans, plansCount }) => {
+  // 検索結果が０件の場合、アラートを表示
+  if (plansCount === 0) {
+    return (
+      <div className='wrapper'>
+        <div className='ui orange message'>
+          <div className='header'>
+            ゴルフ場が見つかりませんでした。条件を変更して再度検索してください。
+          </div>
+        </div>
+      </div>
+    );
+  }
   // Resultコンポーネントは配列を受け取って、繰り返し処理で要素ごとHTMLを返す
   // React.FCってどんな型？インターフェースで定義？
   // plansの例: plans[{caption: "", course_name: "", …}, …]
@@ -35,7 +48,7 @@ const Result: React.FC<Props> = ({ plans }) => {
 
               <div className='statistic'>
                 <div className='value'>
-                  <i className='thumbs up outline icon'></i> {plan.evalution}
+                  <i className='thumbs up outline icon'></i> {plan.evaluation}
                 </div>
               </div>
             </div>

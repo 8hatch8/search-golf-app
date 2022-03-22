@@ -18,7 +18,7 @@ export type Plan = {
   course_name: string;
   duration: string;
   price: string;
-  evalution: string;
+  evaluation: string;
   prefecture: string;
   plan_name: string;
   caption: string;
@@ -32,6 +32,7 @@ const Home = () => {
   const [departure, setDeparture] = React.useState<number>(1);
   const [duration, setDuration] = React.useState<number>(60);
   const [plans, setPlans] = React.useState<Plan[]>([]); // Planの後の[]はなに？
+  const [plansCount, setPlansCount] = React.useState<number | undefined>(undefined);
   registerLocale("ja", ja);
 
   // formタグでbuttonをクリックするとデフォルトでonSubmitイベントが走る
@@ -49,6 +50,8 @@ const Home = () => {
       },
     });
     setPlans(response.data.plans);
+    setPlansCount(response.data.count); // plansCountとなっていたが、countではないか？
+    console.log(response.data.count); // #デバッグ用
     console.log(date, budget, departure, duration); // #デバッグ用
     console.log(response); // #デバッグ用
   };
@@ -126,7 +129,7 @@ const Home = () => {
             </button>
           </div>
         </form>
-        <Result plans={plans} />
+        <Result plans={plans} plansCount={plansCount} />
       </div>
     </div>
   );
