@@ -4,6 +4,7 @@ import "./Common.css";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ja from "date-fns/locale/ja";
 import "react-datepicker/dist/react-datepicker.css";
+import addDays from "date-fns/addDays";
 
 import axios from "axios";
 
@@ -23,10 +24,10 @@ const Home = () => {
       "https://l1kwik11ne.execute-api.ap-northeast-1.amazonaws.com/production/golf-courses";
     const response = await axios.get(url, {
       params: {
-        date: "2022/2/22",
-        budget: "8000",
-        departure: "東京駅",
-        duration: "60分",
+        date: addDays(date, 14),
+        budget: budget,
+        departure: departure,
+        duration: duration,
       },
     });
     console.log(date, budget, departure, duration); // #デバッグ用
