@@ -8,12 +8,16 @@ import addDays from "date-fns/addDays";
 
 import axios from "axios";
 
+//components
+import Result from "./Result";
+
 const Home = () => {
   const Today = new Date();
   const [date, setDate] = React.useState<Date>(Today);
   const [budget, setBudget] = React.useState<number>(8000);
   const [departure, setDeparture] = React.useState<number>(1);
   const [duration, setDuration] = React.useState<number>(60);
+  const [plans, setPlans] = React.useState([]);
   registerLocale("ja", ja);
 
   // formタグでbuttonをクリックするとデフォルトでonSubmitイベントが走る
@@ -30,6 +34,7 @@ const Home = () => {
         duration: duration,
       },
     });
+    setPlans(response.data.plans);
     console.log(date, budget, departure, duration); // #デバッグ用
     console.log(response); // #デバッグ用
   };
@@ -107,6 +112,7 @@ const Home = () => {
             </button>
           </div>
         </form>
+        <Result plans={plans} />
       </div>
     </div>
   );
